@@ -190,7 +190,8 @@ class Spider:
                     self.page_count += 1
                     if weibos:
                         yield weibos
-                    if not to_continue:
+                    # 加入只抓一页
+                    if not to_continue or page >= 1:
                         break
 
                     # 通过加入随机等待避免被限制。爬虫速度过快容易被系统限制(一段时间后限
