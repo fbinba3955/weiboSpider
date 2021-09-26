@@ -1,7 +1,7 @@
 import logging
 import sys
-import tg_publish
 
+from .tg_publish import send_message
 from ..user import User
 from .parser import Parser
 from .util import handle_html
@@ -22,7 +22,7 @@ class InfoParser(Parser):
             nickname = self.selector.xpath('//title/text()')[0]
             nickname = nickname[:-3]
             if nickname == u'登录 - 新' or nickname == u'新浪':
-                tg_publish.send_message(chat_id='775899683', caption='weibo 登录信息已过期')
+                send_message(chat_id='775899683', caption='weibo 登录信息已过期')
                 logger.warning(u'cookie错误或已过期,请按照README中方法重新获取')
                 sys.exit()
             user.nickname = nickname
@@ -42,17 +42,17 @@ class InfoParser(Parser):
                     "//div[@class='tip'][2]/text()")[0] == u'学习经历':
                 user.education = self.selector.xpath(
                     "//div[@class='c'][4]/text()")[0][1:].replace(
-                        u'\xa0', u' ')
+                    u'\xa0', u' ')
                 if self.selector.xpath(
                         "//div[@class='tip'][3]/text()")[0] == u'工作经历':
                     user.work = self.selector.xpath(
                         "//div[@class='c'][5]/text()")[0][1:].replace(
-                            u'\xa0', u' ')
+                        u'\xa0', u' ')
             elif self.selector.xpath(
                     "//div[@class='tip'][2]/text()")[0] == u'工作经历':
                 user.work = self.selector.xpath(
                     "//div[@class='c'][4]/text()")[0][1:].replace(
-                        u'\xa0', u' ')
+                    u'\xa0', u' ')
             return user
         except Exception as e:
             logger.exception(e)
