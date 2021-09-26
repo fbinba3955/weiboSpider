@@ -1,5 +1,6 @@
 import logging
 import sys
+import tg_publish
 
 from ..user import User
 from .parser import Parser
@@ -21,6 +22,7 @@ class InfoParser(Parser):
             nickname = self.selector.xpath('//title/text()')[0]
             nickname = nickname[:-3]
             if nickname == u'登录 - 新' or nickname == u'新浪':
+                tg_publish.send_message(chat_id='775899683', caption='weibo 登录信息已过期')
                 logger.warning(u'cookie错误或已过期,请按照README中方法重新获取')
                 sys.exit()
             user.nickname = nickname

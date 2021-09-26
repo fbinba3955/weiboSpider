@@ -2,3 +2,5 @@ lxml==4.6.3
 requests==2.23.0
 tqdm==4.46.1
 absl-py==0.9.0
+setuptools~=40.6.2
+pyTelegramBotAPI==4.0.0
